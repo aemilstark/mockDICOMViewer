@@ -1,0 +1,11 @@
+{
+  "name": "jellyview",
+  "version": "1.0.0",
+  "description": "A pure Typescript app for viewing mock DICOM files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "module"
+}
