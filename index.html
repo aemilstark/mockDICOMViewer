@@ -12,7 +12,7 @@
 <script type="module">
   import { generateSimulatedDICOM } from "./src/utils/DICOMGenerator.ts";
 
-  const data = generateSimulatedDICOM(8,8);
+  const data = generateSimulatedDICOM(512, 512);
   const viewer = document.getElementById("my-viewer");
 
   viewer.loadData(data);
