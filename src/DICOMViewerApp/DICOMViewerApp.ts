@@ -1,7 +1,7 @@
 // dicomViewerComponent.ts
 import { DicomViewerEngine } from "./viewerEngine";
 import "./controlsComponent";
-import type { DICOMDataset } from "../types/DICOM";
+import type { DICOMDataset } from "@/types/DICOM";
 
 export class DicomViewerApp extends HTMLElement {
   private engine!: DicomViewerEngine;

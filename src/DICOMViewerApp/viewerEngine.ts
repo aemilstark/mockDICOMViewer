@@ -1,4 +1,4 @@
-import type { DICOMDataset } from "../types/DICOM";
+import type { DICOMDataset } from "@/types/DICOM";
 
 export interface TransformState {
   rotation: number; // in degrees

@@ -1,4 +1,4 @@
-import type { DICOMDataset } from "../types/DICOM";
+import type { DICOMDataset } from "@/types/DICOM";
 
 export function generateSimulatedDICOM(width = 512, height = 512): DICOMDataset {
   const pixelData = new Uint16Array(width * height);
