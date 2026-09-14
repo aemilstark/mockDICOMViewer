@@ -1,6 +1,8 @@
 export interface DICOMMetadata {
   patientName: string;
   modality: string;
+  studyID: string;
+  studyDate: Date;
   windowCenter: number;
   windowWidth: number;
   rows: number;

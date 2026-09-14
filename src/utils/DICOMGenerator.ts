@@ -19,8 +19,10 @@ export function generateSimulatedDICOM(width = 512, height = 512): DICOMDataset 
 
   return {
     metadata: {
-      patientName: "DOE JOHN",
+      patientName: `${pickRandom(["DOE", "FOX", "REED", "SMITH"])}, ${pickRandom(["JOHN", "JANE", "ALICE", "BOB"])}`,
       modality: "CR",
+        studyID: `SIM${Math.floor(Math.random() * 1000000)}`,
+        studyDate: new Date(),
       windowCenter: 2000,
       windowWidth: 3000,
       rows: height,
@@ -28,4 +30,11 @@ export function generateSimulatedDICOM(width = 512, height = 512): DICOMDataset 
     },
     pixelData,
   };
+}
+
+function pickRandom<T>(arr: T[]): T | undefined {
+  if (arr.length === 0) return undefined;
+  
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
