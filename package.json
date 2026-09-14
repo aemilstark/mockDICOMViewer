@@ -2,16 +2,21 @@
   "name": "jellyview",
   "version": "1.0.0",
   "description": "A pure Typescript app for viewing mock DICOM files",
+  "keywords": [],
+  "homepage": "https://aemilstark.github.io/mockDICOMViewer/",
+  "author": "Alexander Stark",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "dev": "vite",
     "preview": "vite preview",
-    "dev": "vite"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "type": "module",
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.0"
   }

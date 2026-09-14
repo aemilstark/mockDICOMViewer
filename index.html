@@ -11,10 +11,8 @@
 <script type="module" src="./src/DICOMViewerApp/DICOMViewerApp.ts"></script>
 <script type="module">
   import { generateSimulatedDICOM } from "./src/utils/DICOMGenerator.ts";
-
   const data = generateSimulatedDICOM(512, 512);
   const viewer = document.getElementById("my-viewer");
-
   viewer.loadData(data);
 </script>
 </body>

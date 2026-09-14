@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import path from 'path'
 
 export default defineConfig({
+
+     base: '/mockDICOMViewer/',
   // Resolve path aliases so you can use `@/components/utils` instead of relative paths
   resolve: {
     alias: {
