@@ -20,7 +20,7 @@ export function generateSimulatedDICOM(width = 512, height = 512): DICOMDataset 
   return {
     metadata: {
       patientName: `${pickRandom(["DOE", "FOX", "REED", "SMITH"])}, ${pickRandom(["JOHN", "JANE", "ALICE", "BOB"])}`,
-      modality: "CR",
+      modality: `${pickRandom(["CT", "US", "XA", "CR", "MR", "OT"])}`,
         studyID: `SIM${Math.floor(Math.random() * 1000000)}`,
         studyDate: new Date(),
       windowCenter: 2000,
