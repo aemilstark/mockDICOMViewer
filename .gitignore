@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# TypeScript compiler outputs
+dist/
+
+# Runtime and local configurations
+.env
