@@ -18,6 +18,7 @@ export class ViewerControls extends HTMLElement {
         <label>Window Width: 
           <input type="range" id="ww" min="100" max="4000" value="3000">
         </label>
+        <span>Click/drag to pan</span>
       </div>
     `;
 

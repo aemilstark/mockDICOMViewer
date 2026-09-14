@@ -8,6 +8,11 @@ export class DicomViewerApp extends HTMLElement {
   private shadow!: ShadowRoot;
   private tagBlackList: string[] = ["windowCenter", "windowWidth", "rows", "cols"];
 
+  // Drag state trackers
+  private isDragging = false;
+  private startX = 0;
+  private startY = 0;
+
   connectedCallback(): void {
     // Encapsulate HTML and CSS in Shadow DOM
     this.shadow = this.attachShadow({ mode: "open" });
@@ -41,6 +46,9 @@ export class DicomViewerApp extends HTMLElement {
 
     const controls = this.shadow.querySelector("viewer-controls") as any;
     controls?.attachEngine(this.engine);
+
+    // Bind interactive mouse drag handlers
+    this.initPanHandler(canvas);
   }
 
   // Public API to load datasets from the parent host app
@@ -59,13 +67,40 @@ export class DicomViewerApp extends HTMLElement {
 
         const valueEl = document.createElement("span");
         valueEl.className = "tag-value";
-        valueEl.textContent = `${value}`;
+        if (value instanceof Date) {
+          valueEl.textContent = `${value.toISOString().split("T")[0]}`; // Format date as YYYY-MM-DD
+        } else {
+          valueEl.textContent = `${value}`;
+        }
         li.appendChild(valueEl);
 
         tagListEl?.appendChild(li);
       }
     }
   }
+  
+  private initPanHandler(canvas: HTMLCanvasElement): void {
+    canvas.addEventListener("mousedown", (e: MouseEvent) => {
+      this.isDragging = true;
+      // Capture relative starting offset against current pan coordinates
+      this.startX = e.clientX - this.engine.state.panX;
+      this.startY = e.clientY - this.engine.state.panY;
+    });
+
+    // Attach mousemove/mouseup to window so pan continues if cursor leaves canvas area
+    window.addEventListener("mousemove", (e: MouseEvent) => {
+      if (!this.isDragging) return;
+      this.engine.state.panX = e.clientX - this.startX;
+      this.engine.state.panY = e.clientY - this.startY;
+      this.engine.render();
+    });
+
+    window.addEventListener("mouseup", () => {
+      this.isDragging = false;
+    });
+  }
 }
+
+
 
 customElements.define("dicom-viewer", DicomViewerApp);
