@@ -6,6 +6,7 @@ import type { DICOMDataset } from "@/types/DICOM";
 export class DicomViewerApp extends HTMLElement {
   private engine!: DicomViewerEngine;
   private shadow!: ShadowRoot;
+  private tagBlackList: string[] = ["windowCenter", "windowWidth", "rows", "cols"];
 
   connectedCallback(): void {
     // Encapsulate HTML and CSS in Shadow DOM
@@ -16,7 +17,7 @@ export class DicomViewerApp extends HTMLElement {
         .workspace { display: flex; flex: 1; background: #121212; }
         .sidebar { width: 250px; background: #181818; padding: 1rem; color: #fff; }
         .viewport-container { flex: 1; display: flex; align-items: center; justify-content: center; }
-        .tag-list { list-style: none; padding: 0; }
+        #tag-list { list-style: none; padding: 0; }
         .tag-label { font-weight: bold; }
         .tag-value { margin-left: 0.5rem; }
       </style>
@@ -25,7 +26,7 @@ export class DicomViewerApp extends HTMLElement {
       <div class="workspace">
         <aside class="sidebar">
           <h3>DICOM Tags</h3>
-          <ul class="tag-list">
+          <ul id="tag-list">
             <li>
               <span class="tag-label">Patient Name: </span>
               <span id="patient-name" class="tag-value">none</span>
@@ -54,13 +55,23 @@ export class DicomViewerApp extends HTMLElement {
   public loadData(dicom: DICOMDataset) {
     this.engine.loadDataset(dicom);
 
-    const patientNameEl = this.shadow.querySelector("#patient-name");
-    if (patientNameEl) {
-      patientNameEl.textContent = dicom.metadata.patientName;
-    }
-    const modalityEl = this.shadow.querySelector("#modality");
-    if (modalityEl) {
-      modalityEl.textContent = dicom.metadata.modality;
+    const tagListEl = this.shadow.querySelector("#tag-list");
+    for (const [key, value] of Object.entries(dicom.metadata)) {
+      console.log(`DICOM Metadata - ${key}: ${value}`);
+      if (!this.tagBlackList.includes(key)) {
+        const li = document.createElement("li");
+        const label = document.createElement("span");
+        label.className = "tag-label";
+        label.textContent = `${key}: `;
+        li.appendChild(label);
+
+        const valueEl = document.createElement("span");
+        valueEl.className = "tag-value";
+        valueEl.textContent = `${value}`;
+        li.appendChild(valueEl);
+
+        tagListEl?.appendChild(li);
+      }
     }
   }
 }
