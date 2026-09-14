@@ -16,21 +16,25 @@ export class DicomViewerApp extends HTMLElement {
         .workspace { display: flex; flex: 1; background: #121212; }
         .sidebar { width: 250px; background: #181818; padding: 1rem; color: #fff; }
         .viewport-container { flex: 1; display: flex; align-items: center; justify-content: center; }
+        .tag-list { list-style: none; padding: 0; }
+        .tag-label { font-weight: bold; }
+        .tag-value { margin-left: 0.5rem; }
       </style>
 
       <viewer-controls></viewer-controls>
       <div class="workspace">
         <aside class="sidebar">
           <h3>DICOM Tags</h3>
-          <div class="tag-group">
-            <span class="tag-label">Patient Name: </span>
-            <div id="patient-name" class="tag-value">Loading...</div>
-          </div>
-
-          <div class="tag-group">
-            <span class="tag-label">Modality: </span>
-            <div id="modality" class="tag-value">Loading...</div>
-          </div>
+          <ul class="tag-list">
+            <li>
+              <span class="tag-label">Patient Name: </span>
+              <span id="patient-name" class="tag-value">none</span>
+            </li>
+            <li>
+              <span class="tag-label">Modality: </span>
+              <span id="modality" class="tag-value">none</span>
+            </li>
+          </ul>
         </aside>
         <section class="viewport-container">
           <canvas id="viewport" width="512" height="512"></canvas>
