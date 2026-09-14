@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JellyView</title>
+</head>
+<body>
+  <!-- Any React, Angular, Vue, or Vanilla HTML app -->
+
+<dicom-viewer id="my-viewer"></dicom-viewer>
+<script type="module" src="./src/DICOMViewerApp/DICOMViewerApp.ts"></script>
+<script type="module">
+  import { generateSimulatedDICOM } from "./src/utils/DICOMGenerator.ts";
+
+  const data = generateSimulatedDICOM(8,8);
+  const viewer = document.getElementById("my-viewer");
+
+  viewer.loadData(
+    data.pixelData,
+    data.metadata.rows,
+    data.metadata.cols,
+    data.metadata.windowCenter,
+    data.metadata.windowWidth
+  );
+    console.log(data);
+  console.log(JSON.stringify(data));
+</script>
+<script type="module">console.log('test');</script>
+</body>
+</html>
