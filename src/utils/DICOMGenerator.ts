@@ -52,13 +52,16 @@ export function generateSimulatedDICOM(width = 512, height = 512): DICOMDataset 
   return {
     metadata: {
       patientName: `${pickRandom(["DOE", "FOX", "REED", "SMITH"])}, ${pickRandom(["JOHN", "JANE", "ALICE", "BOB"])}`,
+      patientID: `PAT${Math.floor(Math.random() * 1000000)}`,
+      patientBirthDate: new Date(Math.random() * 400000000000 + 631152000000),
+      studyID: `SIM${Math.floor(Math.random() * 1000000)}`,
+      studyDate: new Date(),
       modality: `${pickRandom(["CT", "US", "XA", "CR", "MR", "OT"])}`,
-        studyID: `SIM${Math.floor(Math.random() * 1000000)}`,
-        studyDate: new Date(),
       windowCenter: 2000,
       windowWidth: 3000,
       rows: height,
       cols: width,
+        photometricInterpretation: "MONOCHROME2",
     },
     pixelData,
   };
