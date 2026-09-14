@@ -26,8 +26,8 @@ export class DicomViewerApp extends HTMLElement {
         .tag-label { font-weight: bold; }
         .tag-value { margin-left: 0.5rem; }
       </style>
-
       <aside class="sidebar">
+        <h2>JellyView</h2>
         <h3>DICOM Tags</h3>
         <ul id="tag-list">
         </ul>
