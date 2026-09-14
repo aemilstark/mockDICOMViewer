@@ -1,6 +1,7 @@
 // dicomViewerComponent.ts
 import { DicomViewerEngine } from "./viewerEngine";
 import "./controlsComponent";
+import type { DICOMDataset } from "../types/DICOM";
 
 export class DicomViewerApp extends HTMLElement {
   private engine!: DicomViewerEngine;
@@ -37,8 +38,8 @@ export class DicomViewerApp extends HTMLElement {
   }
 
   // Public API to load datasets from the parent host app
-  public loadData(pixels: Uint16Array, width: number, height: number, wc: number, ww: number) {
-    this.engine.loadDataset(pixels, width, height, wc, ww);
+  public loadData(DICOM: DICOMDataset) {
+    this.engine.loadDataset(DICOM);
   }
 }
 

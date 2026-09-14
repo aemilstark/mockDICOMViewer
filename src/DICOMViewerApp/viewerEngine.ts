@@ -1,3 +1,5 @@
+import type { DICOMDataset } from "../types/DICOM";
+
 export interface TransformState {
   rotation: number; // in degrees
   scale: number;
@@ -35,15 +37,15 @@ export class DicomViewerEngine {
     this.offscreenCtx = this.offscreenCanvas.getContext("2d")!;
   }
 
-  public loadDataset(pixels: Uint16Array, width: number, height: number, wc: number, ww: number): void {
-    this.rawPixels = pixels;
-    this.imageWidth = width;
-    this.imageHeight = height;
-    this.state.windowCenter = wc;
-    this.state.windowWidth = ww;
+  public loadDataset(DICOM: DICOMDataset): void {
+    this.rawPixels = DICOM.pixelData;
+    this.imageWidth = DICOM.metadata.cols;
+    this.imageHeight = DICOM.metadata.rows;
+    this.state.windowCenter = DICOM.metadata.windowCenter;
+    this.state.windowWidth = DICOM.metadata.windowWidth;
 
-    this.offscreenCanvas.width = width;
-    this.offscreenCanvas.height = height;
+    this.offscreenCanvas.width = DICOM.metadata.cols;
+    this.offscreenCanvas.height = DICOM.metadata.rows;
 
     this.processPixels();
     this.render();

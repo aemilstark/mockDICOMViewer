@@ -15,13 +15,7 @@
   const data = generateSimulatedDICOM(8,8);
   const viewer = document.getElementById("my-viewer");
 
-  viewer.loadData(
-    data.pixelData,
-    data.metadata.rows,
-    data.metadata.cols,
-    data.metadata.windowCenter,
-    data.metadata.windowWidth
-  );
+  viewer.loadData(data);
     console.log(data);
   console.log(JSON.stringify(data));
 </script>
