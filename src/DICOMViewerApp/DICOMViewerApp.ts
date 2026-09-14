@@ -13,8 +13,8 @@ export class DicomViewerApp extends HTMLElement {
     this.shadow = this.attachShadow({ mode: "open" });
     this.shadow.innerHTML = `
       <style>
-        :host { display: flex; flex-direction: column; width: 100%; height: 100%; }
-        .workspace { display: flex; flex: 1; background: #121212; }
+        :host { display: flex; flex-direction: row; width: 100%; height: 100%; font-family: Arial, sans-serif;}
+        .workspace { display: flex; flex: 1; flex-direction: column; background: #121212; }
         .sidebar { width: 250px; background: #181818; padding: 1rem; color: #fff; }
         .viewport-container { flex: 1; display: flex; align-items: center; justify-content: center; }
         #tag-list { list-style: none; padding: 0; }
@@ -22,21 +22,13 @@ export class DicomViewerApp extends HTMLElement {
         .tag-value { margin-left: 0.5rem; }
       </style>
 
-      <viewer-controls></viewer-controls>
+      <aside class="sidebar">
+        <h3>DICOM Tags</h3>
+        <ul id="tag-list">
+        </ul>
+      </aside>
       <div class="workspace">
-        <aside class="sidebar">
-          <h3>DICOM Tags</h3>
-          <ul id="tag-list">
-            <li>
-              <span class="tag-label">Patient Name: </span>
-              <span id="patient-name" class="tag-value">none</span>
-            </li>
-            <li>
-              <span class="tag-label">Modality: </span>
-              <span id="modality" class="tag-value">none</span>
-            </li>
-          </ul>
-        </aside>
+        <viewer-controls></viewer-controls>
         <section class="viewport-container">
           <canvas id="viewport" width="512" height="512"></canvas>
         </section>
