@@ -5,11 +5,12 @@ import type { DICOMDataset } from "@/types/DICOM";
 
 export class DicomViewerApp extends HTMLElement {
   private engine!: DicomViewerEngine;
+  private shadow!: ShadowRoot;
 
   connectedCallback(): void {
-    // 1. Encapsulate HTML and CSS in Shadow DOM
-    const shadow = this.attachShadow({ mode: "open" });
-    shadow.innerHTML = `
+    // Encapsulate HTML and CSS in Shadow DOM
+    this.shadow = this.attachShadow({ mode: "open" });
+    this.shadow.innerHTML = `
       <style>
         :host { display: flex; flex-direction: column; width: 100%; height: 100%; }
         .workspace { display: flex; flex: 1; background: #121212; }
@@ -21,7 +22,15 @@ export class DicomViewerApp extends HTMLElement {
       <div class="workspace">
         <aside class="sidebar">
           <h3>DICOM Tags</h3>
-          <div id="patient-name"></div>
+          <div class="tag-group">
+            <span class="tag-label">Patient Name: </span>
+            <div id="patient-name" class="tag-value">Loading...</div>
+          </div>
+
+          <div class="tag-group">
+            <span class="tag-label">Modality: </span>
+            <div id="modality" class="tag-value">Loading...</div>
+          </div>
         </aside>
         <section class="viewport-container">
           <canvas id="viewport" width="512" height="512"></canvas>
@@ -29,17 +38,26 @@ export class DicomViewerApp extends HTMLElement {
       </div>
     `;
 
-    // 2. Initialize Engine using Shadow DOM selectors
-    const canvas = shadow.querySelector("#viewport") as HTMLCanvasElement;
+    // Initialize Engine using Shadow DOM selectors
+    const canvas = this.shadow.querySelector("#viewport") as HTMLCanvasElement;
     this.engine = new DicomViewerEngine(canvas);
 
-    const controls = shadow.querySelector("viewer-controls") as any;
+    const controls = this.shadow.querySelector("viewer-controls") as any;
     controls?.attachEngine(this.engine);
   }
 
   // Public API to load datasets from the parent host app
-  public loadData(DICOM: DICOMDataset) {
-    this.engine.loadDataset(DICOM);
+  public loadData(dicom: DICOMDataset) {
+    this.engine.loadDataset(dicom);
+
+    const patientNameEl = this.shadow.querySelector("#patient-name");
+    if (patientNameEl) {
+      patientNameEl.textContent = dicom.metadata.patientName;
+    }
+    const modalityEl = this.shadow.querySelector("#modality");
+    if (modalityEl) {
+      modalityEl.textContent = dicom.metadata.modality;
+    }
   }
 }
 
