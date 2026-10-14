@@ -8,7 +8,7 @@ Image processing is done on the programatic level, allowing for fine control and
 
 The entire app is encapsulated in a single HTML element called `dicom-viewer`, allowing for easy embeding into a larger project. Project files have also been organized within the source folder, with app files kept sepearte from the utility files. 
 
-The dev environment uses Vite. It features many small Quality of Life features, to make future development seamless, including an extended .gitignore, a variety of scripts for future testing, path aliesing, and a deployment pipeline. 
+The dev environment uses Vite. It features many small Quality of Life features, to make future development seamless, including an extended .gitignore, and path aliasing. 
 
 There is a single function which uses generics... because I know what those are. 
 
